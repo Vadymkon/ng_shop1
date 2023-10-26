@@ -1,0 +1,30 @@
+<div *ngIf="productsService.products">
+<div class = "max-w-2xl container mx-auto p-5  items-center mt-[50px]">
+  <h1 class="bg-fuchsia-500"> APP: {{title | titlecase}} </h1>
+
+  <input type="text" class="border mb-2 py-2 px-4 w-full" placeholder="FILTER PRODUCTS:"
+         [(ngModel)]="term"
+  >
+  <!--  <app-product [product]="products[0]"> </app-product>-->
+  <!--  <app-product [product]="products[1]"> </app-product>-->
+  <p *ngIf="loading" class="text-center text-lg">Loading...</p>
+
+  <!--  <app-product *ngFor="let product of products; let i = index"-->
+  <!--               [product]="product"></app-product>-->
+  <app-product *ngFor="let product of productsService.products | filterProducts: term; let i = index"
+               [product]="product"></app-product>
+</div>
+<app-modal title="OAO NEW PRODUCT" *ngIf="modalService.isVisible$ | async">
+  <app-create-product>
+
+  </app-create-product>
+
+</app-modal>
+
+<button
+  class="rounded-full bg-amber-300 fixed right-5 bottom-5 px-5 py-5 "
+  (click)="modalService.open()"
+></button>
+
+
+</div>
